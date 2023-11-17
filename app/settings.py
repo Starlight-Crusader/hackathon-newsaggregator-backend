@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,7 +40,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # GENERICS ^
     'rest_framework',
-    "corsheaders",
+    'corsheaders',
+    'rest_framework_simplejwt',
+    # DEPENDENCIES ^
+    'users',
+    'authen',
+    'posts',
+    'categories',
+    # APPLICATIONS ^
 ]
 
 MIDDLEWARE = [
@@ -131,3 +139,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # GENERICS END
 
 CORS_ALLOW_ALL_ORIGINS: True 
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+SIMPLE_JWT = {
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
+    "USER_ID_FIELD": "id",
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10),
+    'ALGORITHM': 'HS256',
+}
+
+AUTH_USER_MODEL = 'users.User'
