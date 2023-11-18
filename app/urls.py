@@ -24,4 +24,5 @@ urlpatterns = [
     path('tags/', include('tags.urls')),
     path('posts/', include('posts.urls')),
     path('polls/', include('polls.urls')),
+    path('petitions/', include('petitions.urls')),
 ]
