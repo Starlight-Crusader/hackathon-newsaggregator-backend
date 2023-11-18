@@ -58,7 +58,16 @@ def approve_poll(request, poll_id):
             status=status.HTTP_403_FORBIDDEN
         )
     
-    record = Poll.objects.get(pk=poll_id)
+    record = None
+
+    try:
+        record = Poll.objects.get(pk=poll_id)
+    except Poll.DoesNotExist:
+        return response.Response(
+            {'message': "Poll not found!"},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
     record.approved = True
     record.save()
 
@@ -100,20 +109,27 @@ def drop_polls(request):
 def count_vote(request, poll_id, option):
     user = User.objects.get(pk=request.user.id)
 
-    poll = None
+    record = None
 
     try:
-        poll = Poll.objects.get(pk=poll_id)
+        record = Poll.objects.get(pk=poll_id)
     except:
         return response.Response(
             {'message': "Poll not found!"},
             status=status.HTTP_404_NOT_FOUND
         )
     
-    poll.votes[option] += 1
-    poll.save()
+    if user not in record.voted:
+        record.votes[option] += 1
+        record.voted.add(user)
+        record.save()
 
-    return response.Response(
-        {'message': "Vote counted!"},
-        status=status.HTTP_200_OK
-    )
+        return response.Response(
+            {'message': "Vote counted!"},
+            status=status.HTTP_200_OK
+        )
+    else:
+        return response.Response(
+            {'message': "You've already cated your vote!"},
+            status=status.HTTP_403_FORBIDDEN
+        )
