@@ -95,7 +95,7 @@ def get_all_posts(requst):
 @permission_classes([IsAuthenticated])
 def get_filtered_posts(request):
     user = User.objects.get(pk=request.user.id)
-    user_tags = User.subscriptions.all()
+    user_tags = User.subscriptions
     
     all_posts = Post.objects.all()
     posts_to_send = []
