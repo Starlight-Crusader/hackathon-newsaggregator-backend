@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import dj_database_url
 from pathlib import Path
 from datetime import timedelta
 
@@ -44,9 +45,9 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     # DEPENDENCIES ^
     'users',
+    'tags',
     'authen',
     'posts',
-    'categories',
     # APPLICATIONS ^
 ]
 
@@ -93,6 +94,9 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+# GENERIC ^
+
+DATABASES['default'] = dj_database_url.parse("postgres://hackathon_db_0mhn_user:GNr5tPlu7ZuCBihFJ8BVoWUlkFzsKSSZ@dpg-clc9q4bmot1c73de9h00-a.frankfurt-postgres.render.com/hackathon_db_0mhn")
 
 
 # Password validation
@@ -154,4 +158,4 @@ SIMPLE_JWT = {
     'ALGORITHM': 'HS256',
 }
 
-AUTH_USER_MODEL = 'users.User'
+# AUTH_USER_MODEL = 'users.User'

@@ -1,13 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 
-from categories.models import Category
+from tags.models import Tag
 
 
 class User(AbstractBaseUser):
     username = models.CharField(unique=True, max_length=255)
     email = models.EmailField(unique=True, max_length=255)
 
-    subscriptions = models.ManyToManyField(Category, related_name='subscribers', blank=True)
+    subscriptions = models.ManyToManyField(Tag, related_name='subscribers', blank=True)
+    is_verified = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'username'

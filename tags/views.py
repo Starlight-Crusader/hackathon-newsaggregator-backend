@@ -2,22 +2,25 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework import response, status
 
-from .models import Category
-from .serializers import CategorySerializer
+from .models import Tag
+from .serializers import TagSerializer
+
+
+root_pass_header_name = 'X-Root-Password'
 
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
-def initialize_categories(request):
+def initialize_tags(request):
     authorization_header = None
 
-    if 'X-Init-Password' not in request.headers:
+    if root_pass_header_name not in request.headers:
         return response.Response(
             {'message': "This request is not authorized!"},
             status=status.HTTP_403_FORBIDDEN
         )
     else:
-        authorization_header = request.headers.get('X-Init-Password')
+        authorization_header = request.headers.get(root_pass_header_name)
 
     if authorization_header != "Djibouti":
         return response.Response(
@@ -25,22 +28,27 @@ def initialize_categories(request):
             status=status.HTTP_403_FORBIDDEN
         )
     
-    Category.objects.all().delete()
+    Tag.objects.all().delete()
 
-    categories = ["Alegeri", "Demonstrații", "Incidente"]
-    Category.objects.bulk_create([Category(name=category) for category in categories])
+    Tag.objects.create(name="Default", type=0)
+
+    tags = ["Alegeri", "Demonstrații", "Incidente"]
+    Tag.objects.bulk_create([Tag(name=category, type=1) for category in tags])
+
+    tags = ["Chișinău", "Bălți"]
+    Tag.objects.bulk_create([Tag(name=category, type=2) for category in tags])
 
     return response.Response(
-        {'message': "Categories initialized successfully"},
+        {'message': "Tags initialized successfully"},
         status=status.HTTP_200_OK
     )
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
-def get_categories(request):
-    categories = Category.objects.all()
-    serializer = CategorySerializer(categories, many=True)
+def get_tags(request):
+    tags = Tag.objects.all()
+    serializer = TagSerializer(tags, many=True)
     return response.Response(
-        {'categories': serializer.data}, 
+        {'tags': serializer.data}, 
         status=status.HTTP_200_OK
     )
