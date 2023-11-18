@@ -141,12 +141,6 @@ def get_post(request, post_id):
         )
     
     serializer = PostSerializer(post)
-    
-    #polls_attached = Poll.objects.get(to_post=post.id)
-    #polls_serializer = PollSerializer(polls_attached)
-
-    #serializer = PostSerializer(post)
-    #serializer.data['polls_attached'] = polls_serializer
 
     return response.Response(
         {"post": serializer.data},
