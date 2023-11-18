@@ -4,7 +4,7 @@ from rest_framework import response, status
 
 from users.models import User
 from .models import Petition
-from .serializers import CreatePetitionSerializer
+from .serializers import CreatePetitionSerializer, PetitionSerializer
 
 
 root_pass_header_name = 'X-Password'
@@ -123,5 +123,17 @@ def drop_petitions(request):
     
     return response.Response(
         {'message': "Petitions dropped successfully!"},
+        status=status.HTTP_200_OK
+    )
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_all_petitions(request):
+    records = Petition.objects.all()
+    serializer = PetitionSerializer(many=True)
+
+    return response.Response(
+        {'petitions': serializer.data},
         status=status.HTTP_200_OK
     )
