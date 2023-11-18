@@ -24,7 +24,7 @@ def create_poll(request):
 
         for option in options:
             record.options.add(option)
-            record.save
+            record.save()
 
         return response.Response(
             {'message': "Poll added successfully!"},
