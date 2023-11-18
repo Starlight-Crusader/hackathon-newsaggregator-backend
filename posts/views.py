@@ -6,8 +6,9 @@ from rest_framework import response, status
 from .models import Post
 from tags.models import Tag
 from users.models import User
+from polls.models import Poll
 
-from .serializers import CatalogPostSerializer, PostSerializer
+from .serializers import CatalogPostSerializer, PostSerializer, CreatePostsSerializer
 
 root_pass_header_name = 'X-Password'
 
@@ -109,7 +110,6 @@ def get_filtered_posts(request):
     posts_to_send = []
     
     for post in all_posts:
-        print(post.tags)
         found = False
         for tag in post.tags:
             if tag in user.subscriptions:
@@ -139,7 +139,10 @@ def get_post(request, post_id):
             status=status.HTTP_404_NOT_FOUND
         )
     
-    serializer = PostSerializer(data=post)
+    polls_attached = Poll.objects.get(to_post=post.id)
+    post['polls_attached'] = polls_attached
+
+    serializer = PostSerializer(post)
 
     return response.Response(
         {"post": serializer.data},
