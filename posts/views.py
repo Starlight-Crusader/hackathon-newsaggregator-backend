@@ -140,11 +140,13 @@ def get_post(request, post_id):
             status=status.HTTP_404_NOT_FOUND
         )
     
-    polls_attached = Poll.objects.get(to_post=post.id)
-    polls_serializer = PollSerializer(polls_attached)
-
     serializer = PostSerializer(post)
-    serializer.data['polls_attached'] = polls_attached
+    
+    #polls_attached = Poll.objects.get(to_post=post.id)
+    #polls_serializer = PollSerializer(polls_attached)
+
+    #serializer = PostSerializer(post)
+    #serializer.data['polls_attached'] = polls_serializer
 
     return response.Response(
         {"post": serializer.data},

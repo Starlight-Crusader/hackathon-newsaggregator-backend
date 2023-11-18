@@ -14,6 +14,12 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = ('title', 'body', 'timestamp', 'tags', 'polls_attached',)
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['polls_attached'] = instance.attached_polls.all().values()
+
+        return data
+
 
 class CreatePostSerializer(serializers.ModelSerializer):
     tags = TagSerializer(many=True)
