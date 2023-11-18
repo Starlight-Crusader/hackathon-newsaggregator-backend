@@ -10,19 +10,19 @@ class RegisterSerializer(serializers.Serializer):
     username = serializers.CharField(
         write_only=False,
         validators=[UniqueValidator(queryset=User.objects.all())],
-        required=True
+        required=True,
     )
 
     password = serializers.CharField(
         write_only=True,
         validators=[],
-        required=True
+        required=True,
     )
 
-    email = serializers.EmailField(
+    email = serializers.CharField(
         write_only=False,
         validators=[UniqueValidator(queryset=User.objects.all())],
-        required=False
+        required=True,
     )
 
     class Meta:

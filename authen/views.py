@@ -14,13 +14,13 @@ def register_view(requset):
     serializer = RegisterSerializer(data=requset.data)
     serializer.is_valid(raise_exception=True)
 
-    try:
+    if serializer.is_valid():
         serializer.save()
         return response.Response(
             {'message': "User registered successfully!"},
             status=status.HTTP_201_CREATED
         )
-    except:
+    else:
         return response.Response(
             {'message': serializer.errors},
             status=status.HTTP_400_BAD_REQUEST
