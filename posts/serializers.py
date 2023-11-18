@@ -16,7 +16,7 @@ class PostSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        data['polls_attached'] = instance.attached_polls.all().values()
+        data['polls_attached'] = instance.attached_polls.filter(is_approved=True).values()
 
         return data
 

@@ -130,7 +130,7 @@ def drop_petitions(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_all_petitions(request):
-    records = Petition.objects.all()
+    records = Petition.objects.filter(is_approved=True)
     serializer = PetitionSerializer(many=True)
 
     return response.Response(
