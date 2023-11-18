@@ -10,3 +10,8 @@ class PetitionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Petition
         fields = ('title', 'body', 'creator',)
+
+
+class CreatePetitionSerializer(serializers.ModelSerializer):
+    class Meta:
+        pass

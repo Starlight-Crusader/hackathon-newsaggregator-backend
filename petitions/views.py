@@ -12,3 +12,4 @@ from .serializers import serializers
 def create_petition(request):
     user = User.objects.get(pk=request.user.id)
     # serializer = 
+    pass

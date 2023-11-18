@@ -7,7 +7,7 @@ from .models import Post
 from tags.models import Tag
 from users.models import User
 
-from .serializers import CreatePostsSerializer, CatalogPostsSerializer
+from .serializers import CreatePostsSerializer, CatalogPostsSerializer, PostSerializer
 
 root_pass_header_name = 'X-Password'
 
@@ -82,7 +82,14 @@ def drop_posts(request):
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def get_all_posts(requst):
-    pass
+    posts = Post.objects.all()
+    serializer = CatalogPostsSerializer(data=posts)
+
+    return response.Response(
+        {'posts': serializer.data},
+        status=status.HTTP_200_OK
+    )
+
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -110,5 +117,24 @@ def get_filtered_posts(request):
 
     return response.Response(
         serializer.data,
+        status=status.HTTP_200_OK
+    )
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_post(request, post_id):
+    post = None
+    try:
+        post = Post.objects.get(pk=post_id)
+    except:
+        return response.Response(
+            {'message': "Post not found!"},
+            status=status.HTTP_404_NOT_FOUND
+        )
+    
+    serializer = PostSerializer(data=post)
+
+    return response.Response(
+        {"post": serializer.data},
         status=status.HTTP_200_OK
     )
