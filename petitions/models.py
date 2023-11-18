@@ -4,5 +4,5 @@ from users.models import User
 class Petition(models.Model):
     title = models.TextField()
     body = models.TextField()
-    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_polls')
-    voted = models.ManyToManyField(User, related_name='voted_polls')
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_posts')
+    voted = models.ManyToManyField(User, related_name='voted_posts')
