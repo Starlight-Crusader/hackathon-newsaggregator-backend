@@ -12,7 +12,7 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ['title', 'body', 'timestamp', 'tags', 'polls_attached']
+        fields = ('title', 'body', 'timestamp', 'tags', 'polls_attached',)
 
 
 class CreatePostSerializer(serializers.ModelSerializer):
@@ -20,7 +20,7 @@ class CreatePostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ['title', 'body', 'link', 'timestamp', 'tags']
+        fields = ('title', 'body', 'link', 'timestamp', 'tags',)
 
 
 class CreatePostsSerializer(serializers.Serializer):
@@ -30,7 +30,4 @@ class CreatePostsSerializer(serializers.Serializer):
 class CatalogPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
-        fields = ['title', 'timestamp']
-
-class CatalogPostsSerializer(serializers.ModelSerializer):
-    posts = CatalogPostSerializer(many=True)
+        fields = ('id', 'title', 'timestamp',)

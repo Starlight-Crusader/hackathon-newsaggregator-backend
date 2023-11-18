@@ -39,7 +39,7 @@ def create_poll(request):
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
-def approve_poll(request, user_id):
+def approve_poll(request, poll_id):
     authorization_header = None
 
     if root_pass_header_name not in request.headers:
@@ -56,7 +56,7 @@ def approve_poll(request, user_id):
             status=status.HTTP_403_FORBIDDEN
         )
     
-    record = Poll.objects.get(pk=user_id)
+    record = Poll.objects.get(pk=poll_id)
     record.approved = True
     record.save()
 

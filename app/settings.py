@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     'tags',
     'authen',
     'posts',
-    'polls'
+    'polls',
+    'petitions',
     # APPLICATIONS ^
 ]
 

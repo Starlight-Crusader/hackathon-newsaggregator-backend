@@ -12,6 +12,10 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('id', 'username', 'subscriptions', 'email',)
 
+class UserPetitionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        field = ('username',)
 
 class UpdateSubscriptionsSerializer(serializers.Serializer):
     tags = serializers.ListField(child=serializers.CharField(),)
