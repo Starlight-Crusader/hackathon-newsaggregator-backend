@@ -27,7 +27,10 @@ SECRET_KEY = 'django-insecure-a#0x7*@t)z0wui0-w#_ofcy@#3nu^h+^+4i136m^h79&v0!yth
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "127.0.0.1:5173",
+]
 
 
 # Application definition
@@ -48,10 +51,13 @@ INSTALLED_APPS = [
     'tags',
     'authen',
     'posts',
+    'polls'
     # APPLICATIONS ^
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
+    # CORS ^
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -60,8 +66,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # GENERICS ^
-    "corsheaders.middleware.CorsMiddleware",
-    "django.middleware.common.CommonMiddleware",
 ]
 
 ROOT_URLCONF = 'app.urls'
@@ -142,7 +146,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # GENERICS END
 
-CORS_ALLOW_ALL_ORIGINS: True 
+CORS_ALLOW_ALL_ORIGINS = True 
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (

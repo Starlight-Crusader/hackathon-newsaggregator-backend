@@ -7,7 +7,7 @@ from tags.models import Tag
 from .serializers import UpdateSubscriptionsSerializer, UpdateEmailSerializer, UpdateVerificationStatusSerializer
 
 
-root_pass_header_name = 'X-Root-Password'
+root_pass_header_name = 'X-Password'
 
 
 @api_view(['POST'])
@@ -97,3 +97,29 @@ def update_verification_status(request, user_id):
             {'message': serializer.errors},
             status=status.HTTP_400_BAD_REQUEST
         )
+    
+@api_view(['DELETE'])
+@permission_classes([AllowAny])
+def drop_all_users(request):
+    authorization_header = None
+
+    if root_pass_header_name not in request.headers:
+        return response.Response(
+            {'message': "This request is not authorized!"},
+            status=status.HTTP_403_FORBIDDEN
+        )
+    else:
+        authorization_header = request.headers.get(root_pass_header_name)
+
+    if authorization_header != "Djibouti":
+        return response.Response(
+            {'message': "This request is not authorized!"},
+            status=status.HTTP_403_FORBIDDEN
+        )
+    
+    User.objects.all().delete()
+
+    return response.Response(
+        {'message': "Users dropped successfully!"},
+        status=status.HTTP_200_OK
+    )
