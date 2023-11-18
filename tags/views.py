@@ -6,7 +6,7 @@ from .models import Tag
 from .serializers import TagSerializer
 
 
-root_pass_header_name = 'X-Root-Password'
+root_pass_header_name = 'X-Password'
 
 
 @api_view(['POST'])

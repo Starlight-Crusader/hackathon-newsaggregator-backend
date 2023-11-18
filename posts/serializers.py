@@ -20,7 +20,7 @@ class CreatePostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ['title', 'body', 'timestamp', 'tags']
+        fields = ['title', 'body', 'link', 'timestamp', 'tags']
 
 
 class CreatePostsSerializer(serializers.Serializer):

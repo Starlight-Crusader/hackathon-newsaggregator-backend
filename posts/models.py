@@ -6,4 +6,4 @@ class Post(models.Model):
     title = models.TextField()
     body = models.TextField()
     link = models.CharField(max_length=255)
-    tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag, blank=True)
