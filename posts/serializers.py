@@ -31,6 +31,3 @@ class CatalogPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ('id', 'title', 'timestamp',)
-
-class CatalogPostsSerializer(serializers.ModelSerializer):
-    posts = CatalogPostSerializer(many=True)

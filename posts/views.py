@@ -7,7 +7,7 @@ from .models import Post
 from tags.models import Tag
 from users.models import User
 
-from .serializers import CreatePostsSerializer, CatalogPostsSerializer, PostSerializer
+from .serializers import CatalogPostSerializer, PostSerializer
 
 root_pass_header_name = 'X-Password'
 
@@ -83,7 +83,7 @@ def drop_posts(request):
 @permission_classes([AllowAny])
 def get_all_posts(requst):
     posts = Post.objects.all()
-    serializer = CatalogPostsSerializer(data=posts)
+    serializer = CatalogPostSerializer(data=list(posts), many=True)
 
     return response.Response(
         {'posts': serializer.data},
@@ -95,30 +95,37 @@ def get_all_posts(requst):
 @permission_classes([IsAuthenticated])
 def get_filtered_posts(request):
     user = User.objects.get(pk=request.user.id)
-    user_tags = user.subscriptions
-    
     all_posts = Post.objects.all()
+    serializer = None
+
+    if not user.subscriptions.exists():
+        serializer = CatalogPostSerializer(all_posts, many=True)
+
+        return response.Response(
+            {'posts': serializer.data},
+            status=status.HTTP_200_OK
+        )
+    
     posts_to_send = []
     
     for post in all_posts:
-        post_tags = post.tags.all()
-
+        print(post.tags)
         found = False
-
-        for tag in post_tags:
-            if tag in user_tags:
+        for tag in post.tags:
+            if tag in user.subscriptions:
                 found = True
                 break
 
         if found:
             posts_to_send.append(post)
 
-    serializer = CatalogPostsSerializer(data=posts_to_send)
+    serializer = CatalogPostSerializer(posts_to_send, many=True)
 
     return response.Response(
-        serializer.data,
+        {'posts': serializer.data},
         status=status.HTTP_200_OK
     )
+
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
