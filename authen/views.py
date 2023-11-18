@@ -12,7 +12,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 @permission_classes([AllowAny])
 def register_view(requset):
     serializer = RegisterSerializer(data=requset.data)
-    serializer.is_valid(raise_exeption=True)
+    serializer.is_valid(raise_exception=True)
 
     try:
         serializer.save()

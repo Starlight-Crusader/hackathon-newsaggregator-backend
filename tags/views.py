@@ -9,7 +9,7 @@ from .serializers import TagSerializer
 root_pass_header_name = 'X-Root-Password'
 
 
-@api_view(['GET'])
+@api_view(['POST'])
 @permission_classes([AllowAny])
 def initialize_tags(request):
     authorization_header = None
