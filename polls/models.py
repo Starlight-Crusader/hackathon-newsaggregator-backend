@@ -6,8 +6,8 @@ from posts.models import Post
 
 class Poll(models.Model):
     title = models.TextField()
-    options = ArrayField(models.CharField(max_length=255), blank=True)
-    votes = ArrayField(models.IntegerField(default=0), blank=True)
+    options = ArrayField(models.CharField(max_length=255))
+    votes = ArrayField(models.IntegerField(default=0))
     
     to_post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='attached_polls')
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_polls')

@@ -3,6 +3,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import response, status
 
 from .models import Poll
+from posts.models import Post
 from users.models import User
 from .serializers import CreatePollSerializer
 
@@ -12,19 +13,20 @@ root_pass_header_name = 'X-Password'
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def create_poll(request):
+def create_poll(request, post_id):
     serializer = CreatePollSerializer(data=request.data)
 
     if serializer.is_valid():
         user = User.objects.get(id=request.user.id)
         title = serializer.validated_data.get('title', [])
         options = serializer.validated_data.get('options', [])
+        to_post = Post.objects.get(pk=post_id)
 
-        record = Poll.objects.create(title=title, creator=user)
-
+        votes = []
         for option in options:
-            record.options.add(option)
-            record.save()
+            votes.append(0)
+
+        record = Poll.objects.create(title=title, creator=user, options=options, votes=votes, to_post=to_post)
 
         return response.Response(
             {'message': "Poll added successfully!"},
