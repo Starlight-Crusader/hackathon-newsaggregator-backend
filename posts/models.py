@@ -1,6 +1,7 @@
 from django.db import models
 from tags.models import Tag
 
+
 class Post(models.Model):
     timestamp = models.TimeField()
     title = models.TextField()

@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import response, status
 
 from .models import Post
 from tags.models import Tag
-from .serializers import CreatePostsSerializer
+from users.models import User
+
+from .serializers import CreatePostsSerializer, CatalogPostsSerializer
 
 root_pass_header_name = 'X-Password'
 
@@ -73,5 +75,40 @@ def drop_posts(request):
 
     return response.Response(
         {'message': "Posts dropped successfully!"},
+        status=status.HTTP_200_OK
+    )
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_all_posts(requst):
+    pass
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_filtered_posts(request):
+    user = User.objects.get(pk=request.user.id)
+    user_tags = User.subscriptions.all()
+    
+    all_posts = Post.objects.all()
+    posts_to_send = []
+    
+    for post in all_posts:
+        post_tags = post.tags.all()
+
+        found = False
+
+        for tag in post_tags:
+            if tag in user_tags:
+                found = True
+                break
+
+        if found:
+            posts_to_send.append(post)
+
+    serializer = CatalogPostsSerializer(data=posts_to_send)
+
+    return response.Response(
+        serializer.data,
         status=status.HTTP_200_OK
     )

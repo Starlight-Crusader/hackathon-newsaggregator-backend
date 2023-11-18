@@ -32,11 +32,11 @@ def initialize_tags(request):
 
     Tag.objects.create(name="Default", type=0)
 
-    tags = ["Alegeri", "Demonstrații", "Incidente"]
+    tags = ["Alegeri", "Economie", "Societate", "Demonstratii", "Politica"]
     Tag.objects.bulk_create([Tag(name=category, type=1) for category in tags])
 
-    tags = ["Chișinău", "Bălți"]
-    Tag.objects.bulk_create([Tag(name=category, type=2) for category in tags])
+    # tags = ["Chișinău", "Bălți"]
+    # Tag.objects.bulk_create([Tag(name=category, type=2) for category in tags])
 
     return response.Response(
         {'message': "Tags initialized successfully"},

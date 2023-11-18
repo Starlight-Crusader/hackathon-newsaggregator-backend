@@ -25,3 +25,12 @@ class CreatePostSerializer(serializers.ModelSerializer):
 
 class CreatePostsSerializer(serializers.Serializer):
     posts = CreatePostSerializer(many=True)
+
+
+class CatalogPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = ['title', 'timestamp']
+
+class CatalogPostsSerializer(serializers.ModelSerializer):
+    posts = CatalogPostSerializer(many=True)
