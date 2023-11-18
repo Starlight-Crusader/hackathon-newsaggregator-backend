@@ -4,7 +4,7 @@ from rest_framework import response, status
 
 from .models import User
 from tags.models import Tag
-from .serializers import UpdateSubscriptionsSerializer, UpdateEmailSerializer, UpdateVerificationStatusSerializer
+from .serializers import UpdateSubscriptionsSerializer, UpdateEmailSerializer, UpdateVerificationStatusSerializer, UserSerializer
 
 
 root_pass_header_name = 'X-Password'
@@ -121,5 +121,17 @@ def drop_all_users(request):
 
     return response.Response(
         {'message': "Users dropped successfully!"},
+        status=status.HTTP_200_OK
+    )
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_profile(request):
+    user = request.user
+    serializer = UserSerializer(user)
+
+    return response.Response(
+        {"user": serializer.data},
         status=status.HTTP_200_OK
     )

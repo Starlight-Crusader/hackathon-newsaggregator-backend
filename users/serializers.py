@@ -10,7 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'subscriptions',)
+        fields = ('id', 'username', 'subscriptions', 'email',)
 
 
 class UpdateSubscriptionsSerializer(serializers.Serializer):
