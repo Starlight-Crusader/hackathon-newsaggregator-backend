@@ -8,6 +8,7 @@ from tags.models import Tag
 from users.models import User
 from polls.models import Poll
 
+from polls.serializers import PollSerializer
 from .serializers import CatalogPostSerializer, PostSerializer, CreatePostsSerializer
 
 root_pass_header_name = 'X-Password'
@@ -140,9 +141,10 @@ def get_post(request, post_id):
         )
     
     polls_attached = Poll.objects.get(to_post=post.id)
-    post['polls_attached'] = polls_attached
+    polls_serializer = PollSerializer(polls_attached)
 
     serializer = PostSerializer(post)
+    serializer.data['polls_attached'] = polls_attached
 
     return response.Response(
         {"post": serializer.data},
