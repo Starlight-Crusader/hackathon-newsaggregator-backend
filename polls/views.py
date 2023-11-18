@@ -91,3 +91,27 @@ def drop_polls(request):
         {'message': "Polls dropped successfully!"},
         status=status.HTTP_200_OK
     )
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def count_vote(request, poll_id, option):
+    user = User.objects.get(pk=request.user.id)
+
+    poll = None
+
+    try:
+        poll = Poll.objects.get(pk=poll_id)
+    except:
+        return response.Response(
+            {'message': "Poll not found!"},
+            status=status.HTTP_404_NOT_FOUND
+        )
+    
+    poll.votes[option] += 1
+    poll.save()
+
+    return response.Response(
+        {'message': "Vote counted!"},
+        status=status.HTTP_200_OK
+    )
