@@ -12,7 +12,7 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ('title', 'body', 'timestamp', 'tags', 'polls_attached',)
+        fields = ('title', 'body', 'link', 'timestamp', 'tags', 'polls_attached',)
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
