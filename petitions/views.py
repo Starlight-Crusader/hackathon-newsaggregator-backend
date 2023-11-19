@@ -17,12 +17,13 @@ def create_petition(request):
     serializer = CreatePetitionSerializer(data=request.data)
 
     if serializer.is_valid():
-        Petition.objects.create(
+        record = Petition.objects.create(
             title=serializer.validated_data['title'], 
             body=serializer.validated_data['body'],
-            creator=user,
-            voted=[user]
+            creator=user
         )
+
+        record.voted.set([user])
 
         return response.Response(
             {'message': "Petition created successfully!"},
@@ -131,7 +132,7 @@ def drop_petitions(request):
 @permission_classes([IsAuthenticated])
 def get_all_petitions(request):
     records = Petition.objects.filter(is_approved=True)
-    serializer = PetitionSerializer(many=True)
+    serializer = PetitionSerializer(records, many=True)
 
     return response.Response(
         {'petitions': serializer.data},

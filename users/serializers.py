@@ -15,7 +15,7 @@ class UserSerializer(serializers.ModelSerializer):
 class UserPetitionSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        field = ('username', 'is_verified')
+        fields = ('username', 'is_verified')
 
 class UpdateSubscriptionsSerializer(serializers.Serializer):
     tags = serializers.ListField(child=serializers.CharField(),)
