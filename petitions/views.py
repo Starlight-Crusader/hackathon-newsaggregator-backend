@@ -87,7 +87,7 @@ def count_sub(request, petition_id):
             status=status.HTTP_404_NOT_FOUND
         )
     
-    if user not in record.voted:
+    if user not in record.voted.all():
         record.voted.add(user)
 
         return response.Response(

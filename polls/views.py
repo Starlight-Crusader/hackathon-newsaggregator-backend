@@ -14,10 +14,10 @@ root_pass_header_name = 'X-Password'
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def create_poll(request, post_id):
+    user = User.objects.get(id=request.user.id)
     serializer = CreatePollSerializer(data=request.data)
 
     if serializer.is_valid():
-        user = User.objects.get(id=request.user.id)
         title = serializer.validated_data.get('title', [])
         options = serializer.validated_data.get('options', [])
         to_post = Post.objects.get(pk=post_id)
@@ -68,7 +68,7 @@ def approve_poll(request, poll_id):
             status=status.HTTP_400_BAD_REQUEST
         )
 
-    record.approved = True
+    record.is_approved = True
     record.save()
 
     return response.Response(
@@ -119,7 +119,7 @@ def count_vote(request, poll_id, option):
             status=status.HTTP_404_NOT_FOUND
         )
     
-    if user not in record.voted:
+    if user not in record.voted.all():
         record.votes[option] += 1
         record.voted.add(user)
         record.save()
