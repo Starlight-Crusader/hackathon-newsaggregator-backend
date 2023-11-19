@@ -9,7 +9,7 @@ class PetitionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Petition
-        fields = ('title', 'body', 'creator',)
+        fields = ('id', 'title', 'body', 'creator',)
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
