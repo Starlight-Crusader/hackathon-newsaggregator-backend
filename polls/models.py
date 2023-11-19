@@ -13,4 +13,4 @@ class Poll(models.Model):
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_polls')
     voted = models.ManyToManyField(User, related_name='voted_polls')
 
-    approved = models.BooleanField(default=False)
+    is_approved = models.BooleanField(default=False)
