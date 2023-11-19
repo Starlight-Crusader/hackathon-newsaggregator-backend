@@ -1,0 +1,636 @@
+{
+	"info": {
+		"_postman_id": "6473504f-d2e4-4d12-9832-8022365ab1d4",
+		"name": "Endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "29828822",
+		"_collection_link": "https://interstellar-flare-488505.postman.co/workspace/hackathon-newsaggregator-endpoi~f22bb9f6-1b7b-4c91-ba9b-0b1cbc5ab741/collection/29828822-6473504f-d2e4-4d12-9832-8022365ab1d4?action=share&source=collection_link&creator=29828822"
+	},
+	"item": [
+		{
+			"name": "Tags",
+			"item": [
+				{
+					"name": "Initialize Tags",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Password",
+								"value": "Djibouti",
+								"type": "text"
+							}
+						],
+						"url": "{{localhost}}/tags/init"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Authentication",
+			"item": [
+				{
+					"name": "Refresh Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"refresh\": \"{{jwt_refresh}}\"\n}"
+						},
+						"url": "{{localhost}}/authen/refresh-token"
+					},
+					"response": []
+				},
+				{
+					"name": "Sign Up",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"JohnDoe\",\n    \"password\": \"JohnDoe\",\n    \"email\": \"john.doe@gmail.com\"\n}"
+						},
+						"url": "{{localhost}}/authen/sign-up"
+					},
+					"response": []
+				},
+				{
+					"name": "Sing In",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"JohnDoe\",\n    \"password\": \"JohnDoe\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{localhost}}/authen/sign-in"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Data Handling",
+			"item": [
+				{
+					"name": "Get Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_access}}",
+								"type": "text"
+							}
+						],
+						"url": "{{localhost}}/users/profile"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Subscriptions",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_access}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tags\": [\"Politica\"]\n}"
+						},
+						"url": "{{localhost}}/users/update-subs"
+					},
+					"response": []
+				},
+				{
+					"name": "Drop Users",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Password",
+								"value": "Djibouti",
+								"type": "text"
+							}
+						],
+						"url": "{{localhost}}/users/drop-users"
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Password",
+								"value": "{{password}}",
+								"type": "text"
+							}
+						],
+						"url": "{{localhost}}/users/update-verification/24"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Posts",
+			"item": [
+				{
+					"name": "Add Posts",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Password",
+								"value": "Djibouti",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"posts\": [\n        {\n            \"title\": \"Prim-ministrul Dorin Recean s-a întâlnit la Guvern cu președinta Sloveniei, Nataša Pirc Musar: „Locul Republicii Moldova este în Uniunea Europeană”\",\n            \"link\": \"https://gov.md/ro/content/prim-ministrul-dorin-recean-s-intalnit-la-guvern-cu-presedinta-sloveniei-natasa-pirc-musar\",\n            \"body\": \"16 noiembrie 2023, Chișinău - Susținerea Sloveniei în procesul de aderare a Republicii Moldova la Uniunea Europeană, precum și modalitățile de intensificare...\",\n            \"timestamp\": \"Saturday, November 18, 2023 19:06:11\",\n            \"tags\": [\n                {\n                    \"type\": 1,\n                    \"name\": \"Economie\"\n                },\n                {\n                    \"type\": 1,\n                    \"name\": \"Societate\"\n                },\n                {\n                    \"type\": 1,\n                    \"name\": \"Politica\"\n                }\n            ]\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{localhost}}/posts/add"
+					},
+					"response": []
+				},
+				{
+					"name": "Drop Posts",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Password",
+								"value": "Djibouti",
+								"type": "text"
+							}
+						],
+						"url": "{{localhost}}/posts/drop-posts"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Filtered Posts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_access}}",
+								"type": "text"
+							}
+						],
+						"url": "{{localhost}}/posts/get-filtered"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Posts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": "{{localhost}}/posts/get-all"
+					},
+					"response": []
+				},
+				{
+					"name": "Get One Post",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_access}}",
+								"type": "text"
+							}
+						],
+						"url": "{{localhost}}/posts/get-post/40"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Polls",
+			"item": [
+				{
+					"name": "Create Poll",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_access}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Susțineți acest proiect de lege?\",\n    \"options\": [\n        \"Da\",\n        \"Nu\"\n    ]\n}"
+						},
+						"url": "{{localhost}}/polls/create/40"
+					},
+					"response": []
+				},
+				{
+					"name": "Approve Poll",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Password",
+								"value": "Djibouti",
+								"type": "text"
+							}
+						],
+						"url": "{{localhost}}/polls/approve/17"
+					},
+					"response": []
+				},
+				{
+					"name": "Cast Vote",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_access}}",
+								"type": "text"
+							}
+						],
+						"url": "{{localhost}}/polls/vote/12/0"
+					},
+					"response": []
+				},
+				{
+					"name": "Drop Polls",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Password",
+								"value": "Djibouti",
+								"type": "text"
+							}
+						],
+						"url": "{{localhost}}/polls/drop"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Petitions",
+			"item": [
+				{
+					"name": "Create Petition",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_access}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Taxe reduse\",\n    \"body\": \"Votați această petiție dacă susțineți inițiativa de reducere a taxelor la sumele de bani importate în țară.\"\n}"
+						},
+						"url": "{{localhost}}/petitions/create/"
+					},
+					"response": []
+				},
+				{
+					"name": "Approve Petition",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Password",
+								"value": "Djibouti",
+								"type": "text"
+							}
+						],
+						"url": "{{localhost}}/petitions/approve/6"
+					},
+					"response": []
+				},
+				{
+					"name": "Subscribe Under Petition",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_access}}",
+								"type": "text"
+							}
+						],
+						"url": "{{localhost}}/petitions/subscribe/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Drop Petitions",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Password",
+								"value": "Djibouti",
+								"type": "text"
+							}
+						],
+						"url": "{{localhost}}/petitions/drop"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Petitions",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_access}}",
+								"type": "text"
+							}
+						],
+						"url": "{{localhost}}/petitions/get-all"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "localhost",
+			"value": "http://127.0.0.1:8000",
+			"type": "string"
+		},
+		{
+			"key": "jwt_access",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAwMzE5NDQ3LCJpYXQiOjE3MDAzMTg4NDcsImp0aSI6Ijc2MDZlY2I5ZDJiNDRhMTJhY2I0ZWRlZjhhMDdjODk5IiwidXNlcl9pZCI6MX0.O8lUlH_zoBTxV4dtomxdmRb7EftSONZGd13pF09U3gU",
+			"type": "string"
+		},
+		{
+			"key": "jwt_refresh",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcwMDQ2NDQ5MiwiaWF0IjoxNzAwMzc4MDkyLCJqdGkiOiJhN2FkNDFhMWI1M2Q0NTcyYWU5YjEzOTgxYWQ5YTdlNSIsInVzZXJfaWQiOjI0fQ.t3jq16ReLFJuuozlxiwIka0q-KMRtNALVYoQ1FmhmQc",
+			"type": "string"
+		}
+	]
+}
