@@ -85,7 +85,7 @@ def drop_posts(request):
 @permission_classes([AllowAny])
 def get_all_posts(requst):
     posts = Post.objects.all()
-    serializer = CatalogPostSerializer(data=list(posts), many=True)
+    serializer = CatalogPostSerializer(posts, many=True)
 
     return response.Response(
         {'posts': serializer.data},
