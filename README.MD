@@ -8,3 +8,5 @@ Install all the dependencies with:
 Run the developement server:
 
     python manage.py runserver
+
+* Consult endpoints_documentation.json for Postman testing
