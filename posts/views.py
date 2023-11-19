@@ -112,8 +112,8 @@ def get_filtered_posts(request):
     
     for post in all_posts:
         found = False
-        for tag in post.tags:
-            if tag in user.subscriptions:
+        for tag in post.tags.all():
+            if tag in user.subscriptions.all():
                 found = True
                 break
 
