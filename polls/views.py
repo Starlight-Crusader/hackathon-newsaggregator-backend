@@ -77,7 +77,7 @@ def approve_poll(request, poll_id):
     )
 
 
-@api_view(['POST'])
+@api_view(['DELETE'])
 @permission_classes([AllowAny])
 def drop_polls(request):
     authorization_header = None
@@ -96,7 +96,7 @@ def drop_polls(request):
             status=status.HTTP_403_FORBIDDEN
         )
     
-    Poll.objects.delete().all()
+    Poll.objects.all().delete()
 
     return response.Response(
         {'message': "Polls dropped successfully!"},

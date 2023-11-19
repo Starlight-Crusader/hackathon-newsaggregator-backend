@@ -22,6 +22,3 @@ class UpdateSubscriptionsSerializer(serializers.Serializer):
 
 class UpdateEmailSerializer(serializers.Serializer):
     new_email = serializers.EmailField(validators=[UniqueValidator(queryset=User.objects.all())],)
-
-class UpdateVerificationStatusSerializer(serializers.Serializer):
-    is_verified = serializers.BooleanField()

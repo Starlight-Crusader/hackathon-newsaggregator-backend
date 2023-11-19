@@ -4,7 +4,7 @@ from rest_framework import response, status
 
 from .models import User
 from tags.models import Tag
-from .serializers import UpdateSubscriptionsSerializer, UpdateEmailSerializer, UpdateVerificationStatusSerializer, UserSerializer
+from .serializers import UpdateSubscriptionsSerializer, UpdateEmailSerializer, UserSerializer
 
 
 root_pass_header_name = 'X-Password'
@@ -83,20 +83,14 @@ def update_verification_status(request, user_id):
             status=status.HTTP_404_NOT_FOUND
         )
     
-    serializer = UpdateVerificationStatusSerializer(instance=user, data=request.data, partial=True)
+    user.is_verified = True
+    user.save()
 
-    if serializer.is_valid():
-        user.is_verified = serializer.validated_data['is_verified']
-        user.save()
-        return response.Response(
-            {'message': "Verification status changed successfully!"},
-            status=status.HTTP_200_OK
-        )
-    else:
-        return response.Response(
-            {'message': serializer.errors},
-            status=status.HTTP_400_BAD_REQUEST
-        )
+    return response.Response(
+        {'message': "Verification status changed successfully!"},
+        status=status.HTTP_200_OK
+    )
+
     
 @api_view(['DELETE'])
 @permission_classes([AllowAny])
